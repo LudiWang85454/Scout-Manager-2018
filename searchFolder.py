@@ -40,8 +40,9 @@ try:
 	       	fullPath = os.path.join(path, file)
 	        with open(fullPath, 'r') as f:
 	        	data = json.load(f)
-	        	TIMDname = [x for x in data][0]
-	        	db.child('TempTeamInMatchDatas/'+TIMDname).set(data[TIMDname])
+	        TIMDname = [x for x in data][0]
+	        db.child('TempTeamInMatchDatas/'+TIMDname).set(data[TIMDname])
+		os.rename(fullPath, os.path.join(path, 'sent', file))
 	    # Removes files that aren't .txt's or directories
 	    # If statement to ignore directories
 	    elif os.path.isfile(os.path.join(path, file)):
