@@ -1,12 +1,57 @@
 import os
 import json
+import pyrebase
 
-path = '/home/sam/Downloads'
+import traceback
+from slackclient import SlackClient
 
-for file in os.listdir(path):
-    if file.endswith(".txt"):
-    	print(file.split('.')[0])
-       	fullPath = os.path.join(path, file)
-        with open(fullPath, 'r') as f:
-        	data = json.load(f)
-        	print(data)
+with open('../Downloads/data/apikey.txt', 'r') as f:
+	apikey = f.read()
+
+print(apikey)
+slack = SlackClient(apikey)
+userIDs = [
+	'U749CSZ36', # Carl
+	'U1R1L8J9H', # Sam
+]
+
+# This entire try/except statement physically pains me. Blame Sam.
+try:
+	url = 'servervartest-2018'
+	#url = 'scouting-2018-9023a'
+
+	config = {
+		'apiKey': 'mykey',
+		'authDomain': url + '.firebaseapp.com',
+		'databaseURL': 'https://' + url + '.firebaseio.com/',
+		'storageBucket': url + '.appspot.com'
+	}
+
+	firebase = pyrebase.initialize_app(config)
+	db = firebase.database()
+
+	path = '/home/sam/Downloads'
+
+	# Searches for files in 'path' folder
+	for file in os.listdir(path):
+		# Checks if file is a .txt file
+	    if file.endswith(".jsontxt"):
+	    	# Adds file path to file name instead of using string addition
+	       	fullPath = os.path.join(path, file)
+	        with open(fullPath, 'r') as f:
+	        	data = json.load(f)
+	        	TIMDname = [x for x in data][0]
+	        	db.child('TempTeamInMatchDatas/'+TIMDname).set(data[TIMDname])
+	    # Removes files that aren't .txt's or directories
+	    # If statement to ignore directories
+	    elif os.path.isfile(os.path.join(path, file)):
+	    	os.remove(os.path.join(path, file))
+except Exception as e:
+	title = 'ERROR: ' + str(e)
+	error = traceback.format_exc()
+	for user in userIDs:
+		print(slack.api_call('chat.postMessage',
+			channel = user,
+			as_user = True,
+			text = error,
+		))
