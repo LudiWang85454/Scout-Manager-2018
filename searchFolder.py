@@ -38,10 +38,14 @@ try:
 	    if file.endswith(".jsontxt"):
 	    	# Adds file path to file name instead of using string addition
 	       	fullPath = os.path.join(path, file)
+		# Opens file, imports json data
 	        with open(fullPath, 'r') as f:
 	        	data = json.load(f)
+		# Takes TIMDname from file data (top level key, only one)
 	        TIMDname = [x for x in data][0]
+		# Uploads TIMD to firebase
 	        db.child('TempTeamInMatchDatas/'+TIMDname).set(data[TIMDname])
+		# Moves uploaded files to 'sent' folder to avoid re-upload
 		os.rename(fullPath, os.path.join(path, 'sent', file))
 	    # Removes files that aren't .txt's or directories
 	    # If statement to ignore directories
