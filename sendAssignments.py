@@ -15,7 +15,6 @@ for device in devices:
 	print(service_matches)
 	if len(service_matches) == 0:
 	    print("[W] %s not found, not sent." % device)
-	    sys.exit(0)
 
 	first_match = service_matches[0]
 	port = first_match["port"]

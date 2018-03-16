@@ -5,10 +5,11 @@ import pyrebase
 import traceback
 from slackclient import SlackClient
 
-with open('../Downloads/data/apikey.txt', 'r') as f:
+home = os.path.expanduser('~')
+
+with open(os.path.join(home, '/Downloads/data/apikey.txt'), 'r') as f:
 	apikey = f.read()
 
-print(apikey)
 slack = SlackClient(apikey)
 userIDs = [
 	'U749CSZ36', # Carl
@@ -30,11 +31,11 @@ try:
 	firebase = pyrebase.initialize_app(config)
 	db = firebase.database()
 
-	path = '/home/sam/Downloads'
-
+	path = os.path.join(home, 'Downloads')
+	
 	# Searches for files in 'path' folder
 	for file in os.listdir(path):
-		# Checks if file is a .txt file
+		# Checks if file is a .jsontxt file
 	    if file.endswith(".jsontxt"):
 	    	# Adds file path to file name instead of using string addition
 	       	fullPath = os.path.join(path, file)
@@ -55,8 +56,8 @@ except Exception as e:
 	title = 'ERROR: ' + str(e)
 	error = traceback.format_exc()
 	for user in userIDs:
-		print(slack.api_call('chat.postMessage',
+		slack.api_call('chat.postMessage',
 			channel = user,
 			as_user = True,
 			text = error,
-		))
+		)
