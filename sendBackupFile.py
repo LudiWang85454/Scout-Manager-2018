@@ -5,9 +5,9 @@ addr = 'AC:22:0B:E3:16:84'
 
 devices = {
 	'scout1': 'AC:22:0B:E3:1A:26',
-	'scout2': 'AC:22:0B:E3:14:AE',
+	#'scout2': 'AC:22:0B:E3:14:AE',
 	#'scout5': 'AC:22:0B:E3:16:84',
-	'blue_super': 'AC:22:0B:5E:A2:41',
+	#'blue_super': 'AC:22:0B:5E:A2:41',
 }
 for device in devices:
 	print("Sending to %s..." % device)
