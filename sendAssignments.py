@@ -1,13 +1,12 @@
 import bluetooth
 from PyOBEX.client import Client
 
-addr = 'AC:22:0B:E3:16:84'
-
 devices = {
-	'scout1': 'AC:22:0B:E3:1A:26',
-	'scout2': 'AC:22:0B:E3:14:AE',
-	#'scout5': 'AC:22:0B:E3:16:84',
-	'blue_super': 'AC:22:0B:5E:A2:41',
+	#'scout1': 'AC:22:0B:E3:1A:26',
+	#'scout2': 'AC:22:0B:E3:14:AE',
+	#'scout3': '14:DD:A9:47:40:80',
+	'scout5': 'AC:22:0B:E3:16:84',
+	#'blue_super': 'AC:22:0B:5E:A2:41',
 }
 for device in devices:
 	print("Sending to %s..." % device)
@@ -26,4 +25,4 @@ for device in devices:
 	client.connect()
 	client.put("test.txt", "Hello world\n")
 	client.disconnect()
-	print("Successfuly sent to %s." % device)
+	print("Closed connection to %s." % device)
