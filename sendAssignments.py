@@ -21,24 +21,24 @@ firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
 devices = {
-	'scout1': 'AC:22:0B:E3:1A:26',
+	#'scout1': 'AC:22:0B:E3:1A:26',
 	#'scout2': 'AC:22:0B:E3:14:AE',
-	'scout3': '14:DD:A9:47:40:80',
-	'scout4': '30:5A:3A:8E:D2:86',
+	#'scout3': '14:DD:A9:47:40:80',
+	#'scout4': '30:5A:3A:8E:D2:86',
 	#'scout5': 'AC:22:0B:E3:16:84',
-	'scout6': 'AC:22:0B:E3:1E:FF',
-	'scout7': 'AC:63:BE:A8:28:29',
+	#'scout6': 'AC:22:0B:E3:1E:FF',
+	#'scout7': 'AC:63:BE:A8:28:29',
 	#'scout8': 'AC:63:BE:2D:DF:70',
 	#'scout9': '84:D6:D0:13:46:8C',
-	#'scout10': '84:D6:D0:E7:EE:26',
-	#'scout11': '44:65:0D:06:02:BD',
-	#'scout12': 'AC:63:BE:BD:87:10',
-	#'scout13': '10:BF:48:E8:F7:68',
-	#'scout14': '30:85:A9:DD:97:9C',
-	#'scout15': '30:85:A9:DC:1D:FC',
-	#'scout16': '30:85:A9:DA:ED:98',
-	#'scout17': '30:85:A9:DD:90:92',
-	#'scout18': '30:85:A9:DF:D8:88'
+	'scout10': '84:D6:D0:E7:EE:26',
+	'scout11': '44:65:0D:06:02:BD',
+	'scout12': 'AC:63:BE:BD:87:10',
+	'scout13': '10:BF:48:E8:F7:68',
+	'scout14': '30:85:A9:DD:97:9C',
+	'scout15': '30:85:A9:DC:1D:FC',
+	'scout16': '30:85:A9:DA:ED:98',
+	'scout17': '30:85:A9:DD:90:92',
+	'scout18': '30:85:A9:DF:D8:88'
 	#'blue_super': 'AC:22:0B:5E:A2:41',
 }
 
@@ -93,6 +93,6 @@ for device in devices:
 	print("Connecting to \"%s\" on %s" % (name, host))
 	client = Client(host, port)
 	client.connect()
-	client.put("test.txt", "Hello world\n")
+	client.put("Q"+str(matchNum, assignments)
 	client.disconnect()
 	print("Closed connection to %s." % device)
