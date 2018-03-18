@@ -30,15 +30,15 @@ devices = {
 	#'scout7': 'AC:63:BE:A8:28:29',
 	#'scout8': 'AC:63:BE:2D:DF:70',
 	#'scout9': '84:D6:D0:13:46:8C',
-	'scout10': '84:D6:D0:E7:EE:26',
-	'scout11': '44:65:0D:06:02:BD',
-	'scout12': 'AC:63:BE:BD:87:10',
-	'scout13': '10:BF:48:E8:F7:68',
-	'scout14': '30:85:A9:DD:97:9C',
-	'scout15': '30:85:A9:DC:1D:FC',
-	'scout16': '30:85:A9:DA:ED:98',
-	'scout17': '30:85:A9:DD:90:92',
-	'scout18': '30:85:A9:DF:D8:88'
+	#'scout10': '84:D6:D0:E7:EE:26',
+	#'scout11': '44:65:0D:06:02:BD',
+	#'scout12': 'AC:63:BE:BD:87:10',
+	'scout13': '10:BF:48:E8:F7:6A',
+	#'scout14': '30:85:A9:DD:97:9C',
+	#'scout15': '30:85:A9:DC:1D:FC',
+	#'scout16': '30:85:A9:DA:ED:98',
+	#'scout17': '30:85:A9:DD:90:92',
+	#'scout18': '30:85:A9:DF:D8:88'
 	#'blue_super': 'AC:22:0B:5E:A2:41',
 }
 
@@ -50,6 +50,8 @@ with open(os.path.join(home, 'Documents/dallasIndex.json'), 'r') as f:
 	matchIndex = json.load(f)
 # Using for scout training until full system implemented
 matchNum = db.child("currentMatchNum").get().val()
+print('MATCHNUM', matchNum)
+filename = "Q"+str(matchNum)+'.txt'
 with open(os.path.join(home, 'Documents/matches_dallas2018.json'), 'r') as f:
 	matchData = json.load(f)
 index = matchIndex[str(matchNum)]
@@ -78,21 +80,24 @@ print(assignments)
 
 print("")
 
+notsent = []
 for device in devices:
 	print("Sending to %s..." % device)
 	service_matches = bluetooth.find_service(name=b'OBEX Object Push', address = devices[device] )
 	print(service_matches)
 	if len(service_matches) == 0:
 		print("[W] %s not found, not sent." % device)
+		notsent.append(device)
+	else:
+		first_match = service_matches[0]
+		port = first_match["port"]
+		name = first_match["name"]
+		host = first_match["host"]
 
-	first_match = service_matches[0]
-	port = first_match["port"]
-	name = first_match["name"]
-	host = first_match["host"]
+		print("Connecting to \"%s\" on %s" % (name, host))
+		client = Client(host, port)
+		client.connect()
+		client.put(filename, json.dumps(assignments))
+		client.disconnect()
+		print("Closed connection to %s." % device)
 
-	print("Connecting to \"%s\" on %s" % (name, host))
-	client = Client(host, port)
-	client.connect()
-	client.put("Q"+str(matchNum, assignments)
-	client.disconnect()
-	print("Closed connection to %s." % device)
