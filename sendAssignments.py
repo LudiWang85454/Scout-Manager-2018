@@ -5,6 +5,10 @@ import os
 import json
 import random
 
+resendMode = 0
+
+resendIDs = []
+
 home = os.path.expanduser('~')
 
 #url = 'servervartest-2018'
@@ -42,13 +46,19 @@ devices = {
 	#'blue_super': 'AC:22:0B:5E:A2:41',
 }
 
+if resendMode == 1:
+	devices = {k:v for k,v in devices.iteritems() if int(k[5:]) in resendIDs}
+
+print(devices)
+
+
 scouts = 'Nathan Justin Joey Noah Anoushka Zoe Rolland Teo Hanson Jack Tim Calvin Asha'
 #scouts = 'Zach James Gemma Carl Freddy Carter Kenny Emily Eli Stephen Aidan Lyra Aakash Amanda'
 scouts = scouts.split()
 
 
 # Backup assignment system
-
+'''
 with open(os.path.join(home, 'Documents/dallasIndex.json'), 'r') as f:
 	matchIndex = json.load(f)
 # Using for scout training until full system implemented
@@ -86,7 +96,7 @@ with open('../Documents/exampleAssignment.txt', 'w') as f:
 '''
 assignments = db.child('scouts').get().val()
 assignments['assignments'] = {k:v for k, v in assignments['assignments'] if k['team_number'] != -1}
-'''
+
 print("")
 
 notsent = []
