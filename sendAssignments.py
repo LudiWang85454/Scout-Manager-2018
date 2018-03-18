@@ -46,6 +46,9 @@ scouts = 'Nathan Justin Joey Noah Anoushka Zoe Rolland Teo Hanson Jack Tim Calvi
 #scouts = 'Zach James Gemma Carl Freddy Carter Kenny Emily Eli Stephen Aidan Lyra Aakash Amanda'
 scouts = scouts.split()
 
+
+# Backup assignment system
+
 with open(os.path.join(home, 'Documents/dallasIndex.json'), 'r') as f:
 	matchIndex = json.load(f)
 # Using for scout training until full system implemented
@@ -77,6 +80,11 @@ for team in extraTeams:
 	availableScouts.remove(chosenScout)
 print(extraTeams)
 print(assignments)
+
+with open('../Documents/exampleAssignment.txt', 'w') as f:
+	f.write(json.dumps(assignments))
+
+#assignments = db.child('scouts').get().val()
 
 print("")
 
