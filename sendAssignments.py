@@ -95,7 +95,7 @@ with open('../Documents/exampleAssignment.txt', 'w') as f:
 	f.write(json.dumps(assignments))
 '''
 assignments = db.child('scouts').get().val()
-assignments['assignments'] = {k:v for k, v in assignments['assignments'].iteritems() if k['team_number'] != -1}
+assignments['assignments'] = {k for k in assignments['assignments'] if assignments['assignments'][k]['team'] != -1}
 
 print("")
 
