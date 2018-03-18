@@ -48,7 +48,7 @@ scouts = scouts.split()
 
 
 # Backup assignment system
-
+'''
 with open(os.path.join(home, 'Documents/dallasIndex.json'), 'r') as f:
 	matchIndex = json.load(f)
 # Using for scout training until full system implemented
@@ -83,8 +83,9 @@ print(assignments)
 
 with open('../Documents/exampleAssignment.txt', 'w') as f:
 	f.write(json.dumps(assignments))
-
-#assignments = db.child('scouts').get().val()
+'''
+assignments = db.child('scouts').get().val()
+assignments['assignments'] = {k:v for k, v in assignments['assignments'] if k['team_number'] != -1}
 
 print("")
 
