@@ -1,0 +1,14 @@
+[Unit]
+Description=Simplified firebase listener
+After=syslog.target
+
+[Service]
+Type=simple
+User=citrus
+WorkingDirectory=/home/citrus/Desktop
+ExecStart=/usr/bin/python /home/citrus/Desktop/databaseListener.py
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target

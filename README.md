@@ -4,3 +4,5 @@ Set searchFolder.py to run as cron. (run crontab -e) and add the following line:
 */1 * * * * /usr/bin/python /home/NAMEOFUSER/Desktop/searchFolder.py
 Create directories 'data', 'sent'.
 Add apikey.txt file in 'data' folder with slack bot API key.
+Add lastMatch.txt file in 'data' folder with "0".
+Check configuration in databaseListener.py comments
