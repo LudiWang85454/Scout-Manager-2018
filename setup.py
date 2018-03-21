@@ -29,6 +29,9 @@ data = {
 with open(os.path.join(home, 'Downloads/data/activeScouts.json'), 'w') as f:
 	json.dump(data, f)
 
+with open(os.path.join(home, 'Downloads/data/activeScoutsBackup.json'), 'w') as f:
+	json.dump(data, f)
+
 with open(os.path.join(home, 'Downloads/data/apikey.txt'), 'w') as f:
 	f.write(apikey)
 

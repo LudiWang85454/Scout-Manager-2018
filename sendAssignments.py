@@ -32,26 +32,22 @@ db = firebase.database()
 
 with open(os.path.join(home, 'Downloads/data/activeScouts.json'), 'r') as f:
 	devices = json.load(f)
-	
+
 if resendMode == 1:
 	devices = {k:v for k,v in devices.iteritems() if int(k[5:]) in resendIDs}
 
 print(devices)
 
-
+# Backup assignment system
+'''
 scouts = 'Nathan Justin Joey Noah Anoushka Zoe Rolland Teo Hanson Jack Tim Calvin Asha'
 #scouts = 'Zach James Gemma Carl Freddy Carter Kenny Emily Eli Stephen Aidan Lyra Aakash Amanda'
 scouts = scouts.split()
 
-
-# Backup assignment system
-
 with open(os.path.join(home, 'Documents/dallasIndex.json'), 'r') as f:
 	matchIndex = json.load(f)
 # Using for scout training until full system implemented
-matchNum = db.child("currentMatchNum").get().val()
-print("Match: %s" % matchNum)
-filename = "Q"+str(matchNum)+'.txt'
+
 with open(os.path.join(home, 'Documents/matches_dallas2018.json'), 'r') as f:
 	matchData = json.load(f)
 index = matchIndex[str(matchNum)]
@@ -75,11 +71,17 @@ for team in extraTeams:
 	availableScouts.remove(chosenScout)
 with open('../Documents/exampleAssignment.txt', 'w') as f:
 	f.write(json.dumps(assignments))
-'''
-assignments = db.child('scouts').get().val()
-assignments['assignments'] = {k for k in assignments['assignments'] if assignments['assignments'][k]['team'] != -1}
-'''
+#'''
+# Main system
+assignments = dict(db.child('scouts').get().val())
+assignments['assignments'] = dict({k:v for k, v in assignments['assignments'].items() if assignments['assignments'][k]['team'] != -1})
+#'''
 print("")
+
+matchNum = assignments['match']
+print("Match: %s" % matchNum)
+print("")
+filename = "Q"+str(matchNum)+'.txt'
 
 notsent = []
 for device in devices:
