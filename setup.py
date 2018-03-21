@@ -3,6 +3,8 @@ import os
 
 home = os.path.expanduser('~')
 
+apikey = raw_input("Please enter your slack API key or press 'enter' to skip: ")
+
 data = {
 	'scout1': 'AC:22:0B:E3:1A:26',
 	'scout2': 'AC:22:0B:E3:14:AE',
@@ -26,6 +28,12 @@ data = {
 
 with open(os.path.join(home, 'Downloads/data/activeScouts.json'), 'w') as f:
 	json.dump(data, f)
+
+with open(os.path.join(home, 'Downloads/data/apikey.txt'), 'w') as f:
+	f.write(apikey)
+
+with open(os.path.join(home, 'Downloads/data/lastMatch.txt'), 'w') as f:
+	f.write("0")
 
 print("Done.")
 print("Please modify activeScouts.json and comment out the scouts that are not used on this computer.")
