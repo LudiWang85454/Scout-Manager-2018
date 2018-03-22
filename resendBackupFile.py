@@ -7,7 +7,7 @@ home = os.path.expanduser('~')
 
 # Input (don't edit manually in script, run it)
 resendIDs = []
-resendMode = 1
+resendSomeMode = 1 # if 1, only resends to some
 
 def getInput():
 	global resendIDs
@@ -15,8 +15,8 @@ def getInput():
 	if num == 'd':
 		return
 	elif num == 'a':
-		global resendMode
-		resendMode = 0
+		global resendSomeMode
+		resendSomeMode = 0
 	else:
 		try:
 			int(num)
@@ -27,7 +27,7 @@ def getInput():
 
 getInput()
 
-if resendMode == 1:
+if resendSomeMode == 1:
 	devices = {k:v for k,v in devices.iteritems() if int(k[5:]) in resendIDs}
 
 with open(os.path.join(home, 'Downloads/data/backupAssignments.json'), 'r') as f:
