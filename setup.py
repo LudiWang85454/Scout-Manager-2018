@@ -38,8 +38,5 @@ with open(os.path.join(home, 'Downloads/data/apikey.txt'), 'w') as f:
 with open(os.path.join(home, 'Downloads/data/lastMatch.txt'), 'w') as f:
 	f.write("0")
 
-with open(os.path.join(home, 'Downloads/data/sendAssignmentsOutput.txt'), 'w') as f:
-	f.write("")
-
 print("Done.")
 print("Please modify activeScouts.json and comment out the scouts that are not used on this computer.")
