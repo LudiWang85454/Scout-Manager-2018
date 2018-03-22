@@ -8,7 +8,6 @@ import random
 
 home = os.path.expanduser('~')
 
-#url = 'servervartest-2018'
 url = 'scouting-2018-9023a'
 
 config = {
@@ -22,7 +21,6 @@ firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
 scouts = [str(x) for x in db.child('scouts/assignments').get().val()]
-print(scouts)
 
 def makeASCIIFromJSON(input):
 	if isinstance(input, dict):
@@ -35,22 +33,17 @@ def makeASCIIFromJSON(input):
 		return input
 
 key = "2018" + str(db.child("TBAcode").get().val())
-print(key)
 base_url = "https://www.thebluealliance.com/api/v3/"
 headerkey = "X-TBA-Auth-Key"
 with open(os.path.join(home, 'Downloads/data/TBAapikey.txt'), 'r') as f:
-	headervalue = f.read()
+	authcode = f.read()
 
-eventKeyRequestURL = base_url + "event/"+key+"/matches/simple"#'event/' + key + "/teams" #"_" + match
+eventKeyRequestURL = base_url + "event/"+key+"/matches/simple"
 
-matchData = requests.get(eventKeyRequestURL, headers = {headerkey: headervalue}).json() 
+matchData = requests.get(eventKeyRequestURL, headers = {headerkey: authcode}).json() 
 matchData = makeASCIIFromJSON(matchData)
 
-with open('test.txt', 'w') as f:
-	json.dump(matchData, f)
-
 matchIndex = {match['match_number']:matchData.index(match) for match in matchData if match['comp_level']=='qm'}
-print(matchIndex)
 
 fullAssignments = {}
 for match in matchIndex:
@@ -65,32 +58,41 @@ for match in matchIndex:
 	print(teams)
 	assignments = {'match':matchNum, 'assignments':{}}
 	numScouts = len(scouts)
-	availableScouts = scouts
+	# Required list() to prevent availableScouts from being linked to scouts, which causes removed scouts to not be returned
+	availableScouts = list(scouts)
+	print(scouts)
 	for team in teams:
 		for x in range(numScouts/len(teams)):
 			chosenScout = random.choice(availableScouts)
-			assignments['assignments'].update({chosenScout:{'team':team,'alliance':('red' if team in redTeams else 'blue')}})
+			assignments['assignments'][chosenScout] = {'team':team, 'alliacne':('red' if team in redTeams else 'blue')}
 			availableScouts.remove(chosenScout)
-			print('1', assignments)
 	extraTeams = random.sample(set(teams), numScouts%len(teams))
 	for team in extraTeams:
 		chosenScout = random.choice(availableScouts)
 		assignments['assignments'].update({chosenScout:{'team':team,'alliance':('red' if team in redTeams else 'blue')}})
 		availableScouts.remove(chosenScout)
-	print('t', assignments)
 	fullAssignments[str(matchNum)] = assignments
 
-print(fullAssignments)
+with open(os.path.join(home, 'Downloads/data/backupAssignments.json'), 'w') as f:
+	json.dump(fullAssignments, f)
+
+with open(os.path.join(home, 'Downloads/data/backupAssignments.txt'), 'w') as f:
+	f.write(json.dumps(fullAssignments))
 
 with open(os.path.join(home, 'Downloads/data/activeScouts.json'), 'r') as f:
 	devices = json.load(f)
 
+filename = 'backupAssignments.txt'
+dataToSend = json.dumps(fullAssignments)
+
+notSent = []
 for device in devices:
 	print("Sending to %s..." % device)
 	service_matches = bluetooth.find_service(name=b'OBEX Object Push', address = devices[device] )
 	print(service_matches)
 	if len(service_matches) == 0:
 	    print("[W] %s not found, not sent." % device)
+	    notSend.append(device)
 
 	first_match = service_matches[0]
 	port = first_match["port"]
@@ -100,6 +102,30 @@ for device in devices:
 	print("Connecting to \"%s\" on %s" % (name, host))
 	client = Client(host, port)
 	client.connect()
-	client.put("backupFile.txt", "Hello world\n")
+	client.put(filename, dataToSend)
 	client.disconnect()
 	print("Successfuly sent to %s." % device)
+
+for x in range(15):
+	if len(notsent) == 0:
+		break
+	else:
+		for device in notsent:
+			print("Sending to %s..." % device)
+			service_matches = bluetooth.find_service(name=b'OBEX Object Push', address = devices[device] )
+			print(service_matches)
+			if len(service_matches) == 0:
+				print("[W] %s not found, not sent." % device)
+				notsent.append(device)
+			else:
+				first_match = service_matches[0]
+				port = first_match["port"]
+				name = first_match["name"]
+				host = first_match["host"]
+
+				print("Connecting to \"%s\" on %s" % (name, host))
+				client = Client(host, port)
+				client.connect()
+				client.put(filename, dataToSend)
+				client.disconnect()
+				print("Closed connection to %s." % device)
