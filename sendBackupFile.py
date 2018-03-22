@@ -49,18 +49,15 @@ fullAssignments = {}
 for match in matchIndex:
 	index = matchIndex[match]
 	matchNum = matchData[index]['match_number']
-	print(matchNum, index)
 	redTeams = matchData[index]['alliances']['red']['team_keys']
 	redTeams = [int(team[3:]) for team in redTeams]
 	blueTeams = matchData[index]['alliances']['blue']['team_keys']
 	blueTeams = [int(team[3:]) for team in blueTeams]
 	teams = redTeams + blueTeams
-	print(teams)
 	assignments = {'match':matchNum, 'assignments':{}}
 	numScouts = len(scouts)
 	# Required list() to prevent availableScouts from being linked to scouts, which causes removed scouts to not be returned
 	availableScouts = list(scouts)
-	print(scouts)
 	for team in teams:
 		for x in range(numScouts/len(teams)):
 			chosenScout = random.choice(availableScouts)
