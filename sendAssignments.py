@@ -17,7 +17,6 @@ if len(sys.argv) == 3:
 
 home = os.path.expanduser('~')
 
-#url = 'servervartest-2018'
 url = 'scouting-2018-9023a'
 
 config = {
@@ -103,7 +102,7 @@ for device in devices:
 		client.disconnect()
 		print("Closed connection to %s." % device)
 
-while True:
+for x in range(15):
 	if len(notsent) == 0:
 		break
 	else:
