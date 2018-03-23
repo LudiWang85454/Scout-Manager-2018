@@ -20,7 +20,7 @@ def getInput():
 	else:
 		try:
 			int(num)
-			resendIDs.append(num)
+			resendIDs.append(int(num))
 		except ValueError:
 			print("Please enter an integer.")
 		return getInput()
