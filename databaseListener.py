@@ -30,6 +30,7 @@ def stream_handler(message):
 			match = 0
 		if message["data"] != int(match):
 			subprocess.call(os.path.join(home, "Desktop/sendAssignments.py"), shell=True)
+			subprocess.call(os.path.join(home, "Desktop/scoutNotSent.py"), shell=True)
 			with open(os.path.join(home, 'Downloads/data/lastSent.txt'), 'w') as f:
 				f.write(str(message["data"]))
 
