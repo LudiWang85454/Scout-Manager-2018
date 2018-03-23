@@ -57,21 +57,21 @@ for match in matchIndex:
 	blueTeams = matchData[index]['alliances']['blue']['team_keys']
 	blueTeams = [int(team[3:]) for team in blueTeams]
 	teams = redTeams + blueTeams
-	assignments = {'match':matchNum, 'assignments':{}}
+	assignments = {}
 	numScouts = len(scouts)
 	# Required list() to prevent availableScouts from being linked to scouts, which causes removed scouts to not be returned
 	availableScouts = list(scouts)
 	for team in teams:
 		for x in range(numScouts/len(teams)):
 			chosenScout = random.choice(availableScouts)
-			assignments['assignments'][chosenScout] = {'team':team, 'alliacne':('red' if team in redTeams else 'blue')}
+			assignments[chosenScout] = {'team':team, 'alliance':('red' if team in redTeams else 'blue')}
 			availableScouts.remove(chosenScout)
 	extraTeams = random.sample(set(teams), numScouts%len(teams))
 	for team in extraTeams:
 		chosenScout = random.choice(availableScouts)
-		assignments['assignments'].update({chosenScout:{'team':team,'alliance':('red' if team in redTeams else 'blue')}})
+		assignments.update({chosenScout:{'team':team,'alliance':('red' if team in redTeams else 'blue')}})
 		availableScouts.remove(chosenScout)
-	fullAssignments[str(matchNum)] = assignments
+	fullAssignments["match"+str(matchNum)] = assignments
 
 with open(os.path.join(home, 'Downloads/data/backupAssignments.json'), 'w') as f:
 	json.dump(fullAssignments, f)
