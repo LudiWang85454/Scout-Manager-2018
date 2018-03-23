@@ -11,7 +11,8 @@ with open(os.path.join(home, 'Downloads/data/apikey.txt'), 'r') as f:
 	apikey = f.read()
 
 slack = SlackClient(apikey)
-userIDs = [
+
+userIDs = userIDs = [
 	'U749CSZ36', # Carl
 	'U1R1L8J9H', # Sam
 ]
