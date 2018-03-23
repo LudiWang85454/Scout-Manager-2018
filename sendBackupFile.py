@@ -43,6 +43,9 @@ eventKeyRequestURL = base_url + "event/"+key+"/matches/simple"
 matchData = requests.get(eventKeyRequestURL, headers = {headerkey: authcode}).json() 
 matchData = makeASCIIFromJSON(matchData)
 
+if type(matchData) == dict:
+	print("Error getting data from TBA, check 'TBACode' on firebase! ")
+
 matchIndex = {match['match_number']:matchData.index(match) for match in matchData if match['comp_level']=='qm'}
 
 fullAssignments = {}
