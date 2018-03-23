@@ -46,7 +46,7 @@ for device in devices:
 	print(service_matches)
 	if len(service_matches) == 0:
 	    print("[W] %s not found, not sent." % device)
-	    notSend.append(device)
+	    notSent.append(device)
 
 	first_match = service_matches[0]
 	port = first_match["port"]
@@ -61,16 +61,16 @@ for device in devices:
 	print("Successfuly sent to %s." % device)
 
 for x in range(15):
-	if len(notsent) == 0:
+	if len(notSent) == 0:
 		break
 	else:
-		for device in notsent:
+		for device in notSent:
 			print("Sending to %s..." % device)
 			service_matches = bluetooth.find_service(name=b'OBEX Object Push', address = devices[device] )
 			print(service_matches)
 			if len(service_matches) == 0:
 				print("[W] %s not found, not sent." % device)
-				notsent.append(device)
+				notSent.append(device)
 			else:
 				first_match = service_matches[0]
 				port = first_match["port"]
