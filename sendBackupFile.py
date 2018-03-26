@@ -20,12 +20,6 @@ config = {
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
-# Only change if the number of tablets used at competition changes
-# Do not include backup tablets
-numTabletsUsed = 18
-
-scouts = ["scout"+str(x) for x in range(1,numTabletsUsed+1)]
-
 def makeASCIIFromJSON(input):
 	if isinstance(input, dict):
 		return dict((makeASCIIFromJSON(k), makeASCIIFromJSON(v)) for k, v in input.items())
@@ -62,20 +56,23 @@ for match in matchIndex:
 	blueTeams = [int(team[3:]) for team in blueTeams]
 	teams = redTeams + blueTeams
 	assignments = {}
-	numScouts = len(scouts)
+	numScouts = 18
 	# Required list() to prevent availableScouts from being linked to scouts, which causes removed scouts to not be returned
-	availableScouts = list(scouts)
+	availableScouts = [[1,2,3,4,5,6],[7,8.9,10,11,12],[13,14,15,16,17,18]]
 	for team in teams:
 		for x in range(numScouts/len(teams)):
-			chosenScout = random.choice(availableScouts)
+			chosenScout = random.choice(availableScouts[x])
 			assignments[chosenScout] = {'team':team, 'alliance':('red' if team in redTeams else 'blue')}
-			availableScouts.remove(chosenScout)
+			availableScouts[x].remove(chosenScout)
 	extraTeams = random.sample(set(teams), numScouts%len(teams))
+	if len(availableScouts) != 0:
+		availableScouts = [y for y in availableScouts for x in y]
 	for team in extraTeams:
 		chosenScout = random.choice(availableScouts)
 		assignments.update({chosenScout:{'team':team,'alliance':('red' if team in redTeams else 'blue')}})
 		availableScouts.remove(chosenScout)
 	fullAssignments["match"+str(matchNum)] = assignments
+	print(assignments)
 
 with open(os.path.join(home, 'Downloads/data/backupAssignments.json'), 'w') as f:
 	json.dump(fullAssignments, f)
