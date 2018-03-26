@@ -30,6 +30,7 @@ def makeASCIIFromJSON(input):
 	else:
 		return input
 
+print("Pulling data from firebase...")
 key = "2018" + str(db.child("TBAcode").get().val())
 base_url = "https://www.thebluealliance.com/api/v3/"
 headerkey = "X-TBA-Auth-Key"
@@ -38,6 +39,7 @@ with open(os.path.join(home, 'Downloads/data/TBAapikey.txt'), 'r') as f:
 
 eventKeyRequestURL = base_url + "event/"+key+"/matches/simple"
 
+print("Pulling data from TBA...")
 matchData = requests.get(eventKeyRequestURL, headers = {headerkey: authcode}).json() 
 matchData = makeASCIIFromJSON(matchData)
 
@@ -45,6 +47,18 @@ if type(matchData) == dict:
 	print("Error getting data from TBA, check 'TBACode' on firebase! ")
 
 matchIndex = {match['match_number']:matchData.index(match) for match in matchData if match['comp_level']=='qm'}
+
+# Creates letter assignements
+print("Pulling data from firebase...")
+scouts = db.child("availability").get().val().keys()
+print("Done fetching data.")
+
+letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split()
+print(letters)
+#for scout in scouts
+
+#fullLetters
+
 
 fullAssignments = {}
 for match in matchIndex:
@@ -57,8 +71,9 @@ for match in matchIndex:
 	teams = redTeams + blueTeams
 	assignments = {}
 	numScouts = 18
-	# Required list() to prevent availableScouts from being linked to scouts, which causes removed scouts to not be returned
-	availableScouts = [[1,2,3,4,5,6],[7,8.9,10,11,12],[13,14,15,16,17,18]]
+	scoutSPRRankings = [[1,2,3,4,5,6],[7,8.9,10,11,12],[13,14,15,16,17,18]]
+	# Required list() to prevent availableScouts from being linked to scoutSPRRankings, which causes removed scouts to not be returned
+	availableScouts = list(scoutSPRRankings)
 	for team in teams:
 		for x in range(numScouts/len(teams)):
 			chosenScout = random.choice(availableScouts[x])
@@ -84,7 +99,7 @@ with open(os.path.join(home, 'Downloads/data/activeScouts.json'), 'r') as f:
 	devices = json.load(f)
 
 filename = 'backupAssignments.txt'
-dataToSend = json.dumps(fullAssignments)
+dataToSend = json.dumps({"matches":fullAssignments,"letters":fullLetters})
 
 notSent = []
 for device in devices:

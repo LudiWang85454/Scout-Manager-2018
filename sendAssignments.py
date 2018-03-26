@@ -37,50 +37,16 @@ if resendMode == 1:
 
 print(devices)
 
-# Backup assignment system
-'''
-scouts = 'Nathan Justin Joey Noah Anoushka Zoe Rolland Teo Hanson Jack Tim Calvin Asha'
-#scouts = 'Zach James Gemma Carl Freddy Carter Kenny Emily Eli Stephen Aidan Lyra Aakash Amanda'
-scouts = scouts.split()
-
-with open(os.path.join(home, 'Documents/dallasIndex.json'), 'r') as f:
-	matchIndex = json.load(f)
-# Using for scout training until full system implemented
-
-with open(os.path.join(home, 'Documents/matches_dallas2018.json'), 'r') as f:
-	matchData = json.load(f)
-index = matchIndex[str(matchNum)]
-redTeams = matchData[index]['alliances']['red']['team_keys']
-redTeams = [int(team[3:]) for team in redTeams]
-blueTeams = matchData[index]['alliances']['blue']['team_keys']
-blueTeams = [int(team[3:]) for team in blueTeams]
-teams = redTeams + blueTeams
-assignments = {'match':matchNum, 'assignments':{}}
-numScouts = len(scouts)
-availableScouts = scouts
-for team in teams:
-	for x in range(numScouts/len(teams)):
-		chosenScout = random.choice(availableScouts)
-		assignments['assignments'].update({chosenScout:{'team':team,'alliance':('red' if team in redTeams else 'blue')}})
-		availableScouts.remove(chosenScout)
-extraTeams = random.sample(set(teams), numScouts%len(teams))
-for team in extraTeams:
-	chosenScout = random.choice(availableScouts)
-	assignments['assignments'].update({chosenScout:{'team':team,'alliance':('red' if team in redTeams else 'blue')}})
-	availableScouts.remove(chosenScout)
-with open('../Documents/exampleAssignment.txt', 'w') as f:
-	f.write(json.dumps(assignments))
-#'''
 # Main system
 assignments = dict(db.child('scouts').get().val())
 assignments['assignments'] = dict({k:v for k, v in assignments['assignments'].items() if assignments['assignments'][k]['team'] != -1})
 #'''
 print("")
 
-matchNum = assignments['match']
-print("Match: %s" % matchNum)
+cycleNum = assignments['matchCycle']
+print("Match: %s" % cycleNum)
 print("")
-filename = "Q"+str(matchNum)+'.txt'
+filename = "C"+str(cycleNum)+'.txt'
 
 notsent = []
 for device in devices:
