@@ -20,7 +20,11 @@ config = {
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
-scouts = [str(x) for x in db.child('scouts/assignments').get().val()]
+# Only change if the number of tablets used at competition changes
+# Do not include backup tablets
+numTabletsUsed = 18
+
+scouts = ["scout"+str(x) for x in range(1,numTabletsUsed+1)]
 
 def makeASCIIFromJSON(input):
 	if isinstance(input, dict):
