@@ -30,7 +30,7 @@ print("Done pulling data.")
 sortedSPRs = sorted(availableSPRs.items(), key=lambda x: x[1])
 scouts = [x[0] for x in sortedSPRs]
 
-qrstring = str(cycleNum) if cycleNum >= 10 else '0'+str(cycleNum)
+qrstring = str(cycleNum)+'|' if cycleNum >= 10 else '0'+str(cycleNum)+'|'
 
 for scout in scouts:
 	qrstring += letters[scout]
