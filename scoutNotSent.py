@@ -6,9 +6,6 @@ from slackclient import SlackClient
 #Defines the path to the user for use later
 home = os.path.expanduser('~')
 
-if home == "/home/carl":
-	print('a')
-
 #Sets up the firebase
 url = 'scouting-2018-9023a'
 
