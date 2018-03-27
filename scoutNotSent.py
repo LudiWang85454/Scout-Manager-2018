@@ -83,8 +83,7 @@ userIDs = [
 for user in userIDs:
 		slack.api_call('chat.postMessage',
 			channel = user,
-			as_user = False,
-			username = 'SNS Notification',
+			as_user = True,
 			icon_url = 'https://i.imgur.com/1snON7W.png',
 			attachments = [{'pretext':'Match '+str(currentMatch)+' SNS | Scouts '+str(min(expected))+'-'+str(max(expected)),
 				'fallback': 'Match '+str(currentMatch)+' SNS',
