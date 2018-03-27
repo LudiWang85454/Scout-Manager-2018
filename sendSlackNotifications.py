@@ -1,7 +1,10 @@
 from slackclient import SlackClient
 import pyrebase
+import os
 
-with open('/home/carl/Downloads/data/apikey.txt', 'r') as f:
+home = os.path.expanduser('~')
+
+with open(os.path.join(home, 'Downloads/data/apikey.txt'), 'r') as f:
 	apikey = f.read()
 slack = SlackClient(apikey)
 
