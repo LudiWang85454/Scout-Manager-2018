@@ -41,6 +41,7 @@ def stream_match_handler(message):
 			cycle = 0
 		if message["data"] != int(cycle) and if home == "/home/citrus": # Prevents double slack notification
 			subprocess.call("python3 " +os.path.join(home, "Desktop/scoutNotSent.py"), shell=True)
+			subprocess.call(os.path.join(home, "Desktop/sendSlackNotifications.py"), shell=True)
 			with open(os.path.join(home, 'Downloads/data/lastSentMatch.txt'), 'w') as f:
 				f.write(str(message["data"]))
 
