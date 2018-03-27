@@ -6,6 +6,9 @@ from slackclient import SlackClient
 #Defines the path to the user for use later
 home = os.path.expanduser('~')
 
+if home == "/home/carl":
+	print('a')
+
 #Sets up the firebase
 url = 'scouting-2018-9023a'
 
@@ -19,15 +22,16 @@ config = {
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
+print("Getting data from firebase...")
 #Finds the number of matches already played using the currentMatchNum key
 currentMatch = db.child('currentMatchNum').get().val()
 
-#Gets the activeScouts file from data
-with open(os.path.join(home, 'Downloads/data/activeScouts.json'), 'r') as f:
-	devices = json.load(f)
+#Finds all of the tempTIMDs in the sent folder
+timds = list(db.child("TempTeamInMatchDatas").shallow().get().val())
+print("Done getting data from firebase.")
 
 #Finds all of the scouts who are supposed to be sending to cross reference with
-expected = sorted([int(device.split('t')[1]) for device in devices.keys()])
+expected = [x for x in range(1,19)]
 
 #Initializes the dictionary used for the scoutNotSent function
 scoutSent = {}
@@ -37,22 +41,11 @@ for scout in expected:
 	scoutSent[scout] = []
 	scoutNotSent[scout] = []
 
-#Finds all of the tempTIMDs in the sent folder
-stt = os.listdir(os.path.join(home, 'Downloads/sent/'))
-
-#Deletes timestamps and the jsontxt ending
-for timd in stt:
-	index = stt.index(timd)
-	stt[index] = timd.split('.')[0]
-	if '_' in timd:
-		stt[index] = stt[index].split('_')[1]
-
-	#Adds scout numbers to the scoutSent list
-	timd = stt[index]
+for timd in timds:
 	if 'Q' in timd:
-		teamAndMatch = timd.split('-')[0]
-		scoutNum = timd.split('-')[1]
-		match = teamAndMatch.split('Q')[1]
+		idAndMatch = timd.split('Q')[1]
+		match = idAndMatch.split('-')[0]
+		scoutNum = idAndMatch.split('-')[1]
 		scoutSent[int(scoutNum)] += [int(match)]
 
 #Finally, it iterates through all of the matches in scoutSent and finds missing scouts
