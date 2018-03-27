@@ -22,16 +22,40 @@ config = {
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
-def stream_handler(message):
+def stream_assignment_handler(message):
 	if type(message["data"]) == int:
-		with open(os.path.join(home, '/files/Robotics/2018/Scout-Manager-2018/lastSent.txt'), 'r') as f:#'Downloads/data/lastSent.txt'), 'r') as f:
-			match = f.read()
-		if match == "":
-			match = 0
-		if message["data"] != int(match):
+		with open(os.path.join(home, '/files/Robotics/2018/Scout-Manager-2018/lastSentAssignment.txt'), 'r') as f:#'Downloads/data/lastSent.txt'), 'r') as f:
+			cycle = f.read()
+		if cycle == "":
+			cycle = 0
+		if message["data"] != int(cycle):
 			subprocess.call(os.path.join(home, "Desktop/sendAssignments.py"), shell=True)
-			subprocess.call(os.path.join(home, "Desktop/scoutNotSent.py"), shell=True)
-			with open(os.path.join(home, 'Downloads/data/lastSent.txt'), 'w') as f:
+			with open(os.path.join(home, 'Downloads/data/lastSentAssignment.txt'), 'w') as f:
 				f.write(str(message["data"]))
 
-my_stream = db.child("scouts/match").stream(stream_handler)
+def stream_match_handler(message):
+	if type(message["data"]) == int:
+		with open(os.path.join(home, '/files/Robotics/2018/Scout-Manager-2018/lastSentMatch.txt'), 'r') as f:#'Downloads/data/lastSent.txt'), 'r') as f:
+			cycle = f.read()
+		if cycle == "":
+			cycle = 0
+		if message["data"] != int(cycle):
+			subprocess.call(os.path.join(home, "Desktop/scoutNotSent.py"), shell=True)
+			with open(os.path.join(home, 'Downloads/data/lastSentMatch.txt'), 'w') as f:
+				f.write(str(message["data"]))
+
+
+def stream_cycle_handler(message):
+	if type(message["data"]) == int:
+		with open(os.path.join(home, '/files/Robotics/2018/Scout-Manager-2018/lastSentCycle.txt'), 'r') as f:#'Downloads/data/lastSent.txt'), 'r') as f:
+			cycle = f.read()
+		if cycle == "":
+			cycle = 0
+		if message["data"] != int(cycle):
+			subprocess.call(os.path.join(home, "Desktop/updateQRCode.py"), shell=True)
+			with open(os.path.join(home, 'Downloads/data/lastSentCycle.txt'), 'w') as f:
+				f.write(str(message["data"]))
+
+stream1 = db.child("scouts/cycle").stream(stream_assignment_handler)
+stream3 = db.child("currentMatchNum").stream(stream_match_handler)
+stream2 = db.child("cycleCounter").stream(stream_cycle_handler)

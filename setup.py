@@ -35,7 +35,13 @@ with open(os.path.join(home, 'Downloads/data/activeScoutsBackup.json'), 'w') as 
 with open(os.path.join(home, 'Downloads/data/apikey.txt'), 'w') as f:
 	f.write(apikey)
 
-with open(os.path.join(home, 'Downloads/data/lastMatch.txt'), 'w') as f:
+with open(os.path.join(home, 'Downloads/data/lastSentMatch.txt'), 'w') as f:
+	f.write("0")
+
+with open(os.path.join(home, 'Downloads/data/lastSentAssignment.txt'), 'w') as f:
+	f.write("0")
+
+with open(os.path.join(home, 'Downloads/data/lastSentCycle.txt'), 'w') as f:
 	f.write("0")
 
 print("Done.")
