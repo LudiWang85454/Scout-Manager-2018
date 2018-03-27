@@ -46,9 +46,9 @@ for matchdict in assignments['matches'].keys():
 	assignments['matches'][matchdict] == dict(assignments['matches'][matchdict])
 	for k,v in assignments['matches'][matchdict].items():
 		if assignments['matches'][matchdict][k]['team'] == -1:
-			assignments['matches'][matchdict].remove(k)
+			assignments['matches'][matchdict].pop(k)
 		else:
-			assignments['matches'][matchdict][k] == dict(assignments['matches'][matchdict[k]])
+			assignments['matches'][matchdict][k] == dict(assignments['matches'][matchdict][k])
 
 print("")
 
@@ -73,7 +73,7 @@ for device in devices:
 		print("Connecting to \"%s\" on %s" % (name, host))
 		client = Client(host, port)
 		client.connect()
-		client.put(filename, json.dumps(assignments))
+		client.put(filename, json.dumps(assignments['matches']))
 		client.disconnect()
 		print("Closed connection to %s." % device)
 
@@ -97,6 +97,6 @@ for x in range(15):
 				print("Connecting to \"%s\" on %s" % (name, host))
 				client = Client(host, port)
 				client.connect()
-				client.put(filename, json.dumps(assignments))
+				client.put(filename, json.dumps(assignments['matches']))
 				client.disconnect()
 				print("Closed connection to %s." % device)
