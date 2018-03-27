@@ -38,12 +38,21 @@ if resendMode == 1:
 print(devices)
 
 # Main system
+print("Pulling data from firebase...")
 assignments = dict(db.child('scouts').get().val())
-assignments['assignments'] = dict({k:v for k, v in assignments['assignments'].items() if assignments['assignments'][k]['team'] != -1})
-#'''
+print("Done pulling data.")
+assignments['matches'] = dict(assignments['matches'])
+for matchdict in assignments['matches'].keys():
+	assignments['matches'][matchdict] == dict(assignments['matches'][matchdict])
+	for k,v in assignments['matches'][matchdict].items():
+		if assignments['matches'][matchdict][k]['team'] == -1:
+			assignments['matches'][matchdict].remove(k)
+		else:
+			assignments['matches'][matchdict][k] == dict(assignments['matches'][matchdict[k]])
+
 print("")
 
-cycleNum = assignments['matchCycle']
+cycleNum = assignments['cycle']
 print("Match: %s" % cycleNum)
 print("")
 filename = "C"+str(cycleNum)+'.txt'
