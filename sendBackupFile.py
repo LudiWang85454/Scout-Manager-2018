@@ -53,12 +53,12 @@ print("Pulling data from firebase...")
 scouts = db.child("availability").get().val().keys()
 print("Done fetching data.")
 
-letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split()
-print(letters)
-#for scout in scouts
-
-#fullLetters
-
+letters = list('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+fullLetters = {}
+for scout in scouts:
+	choice = random.choice(letters)
+	fullLetters[scout] = choice
+	letters.remove(choice)
 
 fullAssignments = {}
 for match in matchIndex:
@@ -71,7 +71,7 @@ for match in matchIndex:
 	teams = redTeams + blueTeams
 	assignments = {}
 	numScouts = 18
-	scoutSPRRankings = [[1,2,3,4,5,6],[7,8.9,10,11,12],[13,14,15,16,17,18]]
+	scoutSPRRankings = [[1,2,3,4,5,6],[7,8,9,10,11,12],[13,14,15,16,17,18]]
 	# Required list() to prevent availableScouts from being linked to scoutSPRRankings, which causes removed scouts to not be returned
 	availableScouts = list(scoutSPRRankings)
 	for team in teams:
@@ -87,19 +87,20 @@ for match in matchIndex:
 		assignments.update({chosenScout:{'team':team,'alliance':('red' if team in redTeams else 'blue')}})
 		availableScouts.remove(chosenScout)
 	fullAssignments["match"+str(matchNum)] = assignments
-	print(assignments)
+
+data = {"matches":fullAssignments,"letters":fullLetters}
 
 with open(os.path.join(home, 'Downloads/data/backupAssignments.json'), 'w') as f:
-	json.dump(fullAssignments, f)
+	json.dump(data, f)
 
 with open(os.path.join(home, 'Downloads/data/backupAssignments.txt'), 'w') as f:
-	f.write(json.dumps(fullAssignments))
+	f.write(json.dumps(data))
 
 with open(os.path.join(home, 'Downloads/data/activeScouts.json'), 'r') as f:
 	devices = json.load(f)
 
 filename = 'backupAssignments.txt'
-dataToSend = json.dumps({"matches":fullAssignments,"letters":fullLetters})
+dataToSend = json.dumps(data)
 
 notSent = []
 for device in devices:
