@@ -59,7 +59,7 @@ with open(os.path.join(home, 'Downloads/data/lastSentAssignment.txt'), 'w') as f
 with open(os.path.join(home, 'Downloads/data/lastSentCycle.txt'), 'w') as f:
 	f.write("0")
 
-with open(os.path.join(home, 'Desktop/databaseListener.service'), 'w') as f:
+with open(os.path.join(home, 'scoutManager/databaseListener.service'), 'w') as f:
 	f.write('''[Unit]
 		Description=Simplified firebase listener
 		After=syslog.target
@@ -67,8 +67,8 @@ with open(os.path.join(home, 'Desktop/databaseListener.service'), 'w') as f:
 		[Service]
 		Type=simple
 		User=%s
-		WorkingDirectory=%s/Desktop
-		ExecStart=/usr/bin/python %s/Desktop/databaseListener.py
+		WorkingDirectory=%s/scoutManager
+		ExecStart=/usr/bin/python %s/scoutManager/databaseListener.py
 		StandardOutput=syslog
 		StandardError=syslog
 
@@ -76,7 +76,7 @@ with open(os.path.join(home, 'Desktop/databaseListener.service'), 'w') as f:
 		WantedBy=multi-user.target
 		''' % (home[6:], home, home))
 
-with open(os.path.join(home, 'Desktop/scheduler.service'), 'w') as f:
+with open(os.path.join(home, 'scoutManager/scheduler.service'), 'w') as f:
 	f.write('''[Unit]
 		Description=Simplified python script scheduler
 		After=syslog.target
@@ -84,8 +84,8 @@ with open(os.path.join(home, 'Desktop/scheduler.service'), 'w') as f:
 		[Service]
 		Type=simple
 		User=%s
-		WorkingDirectory=%s/Desktop
-		ExecStart=/usr/bin/python %s/Desktop/scheduler.py
+		WorkingDirectory=%s/scoutManager
+		ExecStart=/usr/bin/python %s/scoutManager/scheduler.py
 		StandardOutput=syslog
 		StandardError=syslog
 
@@ -93,16 +93,16 @@ with open(os.path.join(home, 'Desktop/scheduler.service'), 'w') as f:
 		WantedBy=multi-user.target
 		''' % (home[6:], home, home))
 
-os.system("sudo cp "+os.path.join(home, "Desktop/databaseListener.service")+" /etc/systemd/system/databaseListener.service")
-os.system("sudo cp "+os.path.join(home, "Desktop/scheduler.service")+" /etc/systemd/system/scheduler.service")
-os.remove(os.path.join(home, 'Desktop/databaseListener.service'))
-os.remove(os.path.join(home, 'Desktop/scheduler.service'))
+os.system("sudo cp "+os.path.join(home, "scoutManager/databaseListener.service")+" /etc/systemd/system/databaseListener.service")
+os.system("sudo cp "+os.path.join(home, "scoutManager/scheduler.service")+" /etc/systemd/system/scheduler.service")
+os.remove(os.path.join(home, 'scoutManager/databaseListener.service'))
+os.remove(os.path.join(home, 'scoutManager/scheduler.service'))
 os.system("sudo chmod +x /etc/systemd/system/databaseListener.service")
 os.system("sudo chmod +x /etc/systemd/system/scheduler.service")
-os.system("sudo chmod +x "+os.path.join(home, 'Desktop/scoutNotSent.py'))
-os.system("sudo chmod +x "+os.path.join(home, 'Desktop/searchFolder.py'))
-os.system("sudo chmod +x "+os.path.join(home, 'Desktop/sendSlackNotifications.py'))
-os.system("sudo chmod +x "+os.path.join(home, 'Desktop/updateQRCode.py'))
+os.system("sudo chmod +x "+os.path.join(home, 'scoutManager/scoutNotSent.py'))
+os.system("sudo chmod +x "+os.path.join(home, 'scoutManager/searchFolder.py'))
+os.system("sudo chmod +x "+os.path.join(home, 'scoutManager/sendSlackNotifications.py'))
+os.system("sudo chmod +x "+os.path.join(home, 'scoutManager/updateQRCode.py'))
 os.system("sudo systemctl daemon-reload")
 os.system("sudo systemctl enable databaseListener.service")
 os.system("sudo systemctl enable scheduler.service")

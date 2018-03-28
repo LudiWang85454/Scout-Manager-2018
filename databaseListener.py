@@ -24,7 +24,7 @@ def stream_assignment_handler(message):
 		if cycle == "":
 			cycle = 0
 		if message["data"] != int(cycle):
-			subprocess.call(os.path.join(home, "Desktop/sendAssignments.py"), shell=True)
+			subprocess.call(os.path.join(home, "scoutManager/sendAssignments.py"), shell=True)
 			with open(os.path.join(home, 'Downloads/data/lastSentAssignment.txt'), 'w') as f:
 				f.write(str(message["data"]))
 
@@ -35,8 +35,8 @@ def stream_match_handler(message):
 		if cycle == "":
 			cycle = 0
 		if message["data"] != int(cycle) and home == "/home/citrus": # Prevents double slack notification
-			subprocess.call("python3 " +os.path.join(home, "Desktop/scoutNotSent.py"), shell=True)
-			subprocess.call(os.path.join(home, "Desktop/sendSlackNotifications.py"), shell=True)
+			subprocess.call("python3 " +os.path.join(home, "scoutManager/scoutNotSent.py"), shell=True)
+			subprocess.call(os.path.join(home, "scoutManager/sendSlackNotifications.py"), shell=True)
 			with open(os.path.join(home, 'Downloads/data/lastSentMatch.txt'), 'w') as f:
 				f.write(str(message["data"]))
 
@@ -48,7 +48,7 @@ def stream_cycle_handler(message):
 		if cycle == "":
 			cycle = 0
 		if message["data"] != int(cycle):
-			subprocess.call(os.path.join(home, "Desktop/updateQRCode.py"), shell=True)
+			subprocess.call(os.path.join(home, "scoutManager/updateQRCode.py"), shell=True)
 			with open(os.path.join(home, 'Downloads/data/lastSentCycle.txt'), 'w') as f:
 				f.write(str(message["data"]))
 
