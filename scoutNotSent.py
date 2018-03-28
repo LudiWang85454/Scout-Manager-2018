@@ -66,7 +66,7 @@ for num in expected:
 
 status = '#f1ad1d'
 if slackScoutNotSent == '':
-	slackScoutNotSent = 'All scouts '+str(min(expected))+'-'+str(max(expected))+' sent.'
+	slackScoutNotSent = 'All scouts have sent.'
 	status = 'good'
 
 #Gets slack API key
