@@ -37,6 +37,11 @@ while True:
 		data = {k:v for k, v in data.items() if int(k[5:]) in range(11,19)}
 		break
 
+if not os.path.exists(os.path.join(home, 'Downloads/data')):
+	os.makedirs(os.path.join(home, 'Downloads/data'))
+if not os.path.exists(os.path.join(home, 'Downloads/sent')):
+	os.makedirs(os.path.join(home, 'Downloads/sent'))
+
 with open(os.path.join(home, 'Downloads/data/activeScouts.json'), 'w') as f:
 	json.dump(data, f)
 
