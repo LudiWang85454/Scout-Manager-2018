@@ -2,7 +2,6 @@ import json
 import os
 
 home = os.path.expanduser('~')
-print(home)
 apikey = raw_input("Please enter your slack API key or press 'enter' to skip: ")
 
 data = {
