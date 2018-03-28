@@ -16,8 +16,8 @@ config = {
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
-with open(os.path.join(home, 'Downloads/data/backupAssignments.txt'), 'r') as f:
-	data = json.loads(f.read())
+with open(os.path.join(home, 'Downloads/data/backupAssignments.json'), 'r') as f:
+	data = json.load(f)
 
 letters = data['letters']
 
