@@ -1,9 +1,4 @@
 #!/usr/bin/python -p
-# Configuration: sudo cp databaseListener.service /etc/systemd/system/databaseListener.service
-# systemctl daemon-reload
-# systemctl enable databaseListener.service
-# systemctl start databaseListener.service
-# systemctl status databaseListener.service
 import os
 import pyrebase
 import subprocess
@@ -24,7 +19,7 @@ db = firebase.database()
 
 def stream_assignment_handler(message):
 	if type(message["data"]) == int:
-		with open(os.path.join(home, '/files/Robotics/2018/Scout-Manager-2018/lastSentAssignment.txt'), 'r') as f:#'Downloads/data/lastSent.txt'), 'r') as f:
+		with open(os.path.join(home, 'Downloads/data/lastSentAssignment.txt'), 'r') as f:
 			cycle = f.read()
 		if cycle == "":
 			cycle = 0
@@ -35,11 +30,11 @@ def stream_assignment_handler(message):
 
 def stream_match_handler(message):
 	if type(message["data"]) == int:
-		with open(os.path.join(home, '/files/Robotics/2018/Scout-Manager-2018/lastSentMatch.txt'), 'r') as f:#'Downloads/data/lastSent.txt'), 'r') as f:
+		with open(os.path.join(home, 'Downloads/data/lastSentMatch.txt'), 'r') as f:
 			cycle = f.read()
 		if cycle == "":
 			cycle = 0
-		if message["data"] != int(cycle) and if home == "/home/citrus": # Prevents double slack notification
+		if message["data"] != int(cycle) and home == "/home/citrus": # Prevents double slack notification
 			subprocess.call("python3 " +os.path.join(home, "Desktop/scoutNotSent.py"), shell=True)
 			subprocess.call(os.path.join(home, "Desktop/sendSlackNotifications.py"), shell=True)
 			with open(os.path.join(home, 'Downloads/data/lastSentMatch.txt'), 'w') as f:
@@ -48,7 +43,7 @@ def stream_match_handler(message):
 
 def stream_cycle_handler(message):
 	if type(message["data"]) == int:
-		with open(os.path.join(home, '/files/Robotics/2018/Scout-Manager-2018/lastSentCycle.txt'), 'r') as f:#'Downloads/data/lastSent.txt'), 'r') as f:
+		with open(os.path.join(home, 'Downloads/data/lastSentCycle.txt'), 'r') as f:
 			cycle = f.read()
 		if cycle == "":
 			cycle = 0

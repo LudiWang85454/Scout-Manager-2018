@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import pyrebase
 import json
 import os

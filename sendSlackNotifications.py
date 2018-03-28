@@ -1,3 +1,4 @@
+#!/usr/bin/python
 from slackclient import SlackClient
 import pyrebase
 import os
