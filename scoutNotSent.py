@@ -64,7 +64,7 @@ for num in expected:
 				slackScoutNotSent += ', '			
 		slackScoutNotSent += '\n'
 
-status = 'warning'
+status = '#f1ad1d'
 if slackScoutNotSent == '':
 	slackScoutNotSent = 'All scouts '+str(min(expected))+'-'+str(max(expected))+' sent.'
 	status = 'good'
@@ -82,12 +82,12 @@ userIDs = [
 
 #Sends a message to every user
 for user in userIDs:
-		slack.api_call('chat.postMessage',
-			channel = user,
-			as_user = True,
-			icon_url = 'https://i.imgur.com/1snON7W.png',
-			attachments = [{'pretext':'Match '+str(currentMatch)+' SNS | Scouts '+str(min(expected))+'-'+str(max(expected)),
-				'fallback': 'Match '+str(currentMatch)+' SNS',
-				'color':status, 'text':slackScoutNotSent
-			}]
-		)
+	slack.api_call('chat.postMessage',
+		channel = user,
+		as_user = True,
+		icon_url = 'https://i.imgur.com/1snON7W.png',
+		attachments = [{'pretext':'Match '+str(currentMatch-1)+' SNS',
+			'fallback': 'Match '+str(currentMatch-1)+' SNS',
+			'color':status, 'text':slackScoutNotSent
+		}]
+	)
