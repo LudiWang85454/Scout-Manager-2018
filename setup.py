@@ -33,7 +33,7 @@ while True:
 		data = {k:v for k, v in data.items() if int(k[5:]) in range(1,10)}
 		break
 	elif x in ['b', 'B']:
-		data = {k:v for k, v in data.items() if int(k[5:]) in range(11,19)}
+		data = {k:v for k, v in data.items() if int(k[5:]) in range(10,19)}
 		break
 
 if not os.path.exists(os.path.join(home, 'Downloads/data')):
@@ -62,36 +62,36 @@ with open(os.path.join(home, 'Downloads/data/lastSentCycle.txt'), 'w') as f:
 
 with open(os.path.join(home, 'scoutManager/databaseListener.service'), 'w') as f:
 	f.write('''[Unit]
-		Description=Simplified firebase listener
-		After=syslog.target
+Description=Simplified firebase listener
+After=syslog.target
 
-		[Service]
-		Type=simple
-		User=%s
-		WorkingDirectory=%s/scoutManager
-		ExecStart=/usr/bin/python %s/scoutManager/databaseListener.py
-		StandardOutput=syslog
-		StandardError=syslog
+[Service]
+Type=simple
+User=%s
+WorkingDirectory=%s/scoutManager
+ExecStart=/usr/bin/python %s/scoutManager/databaseListener.py
+StandardOutput=syslog
+StandardError=syslog
 
-		[Install]
-		WantedBy=multi-user.target
+[Install]
+WantedBy=multi-user.target
 		''' % (home[6:], home, home))
 
 with open(os.path.join(home, 'scoutManager/scheduler.service'), 'w') as f:
 	f.write('''[Unit]
-		Description=Simplified python script scheduler
-		After=syslog.target
+Description=Simplified python script scheduler
+After=syslog.target
 
-		[Service]
-		Type=simple
-		User=%s
-		WorkingDirectory=%s/scoutManager
-		ExecStart=/usr/bin/python %s/scoutManager/scheduler.py
-		StandardOutput=syslog
-		StandardError=syslog
+[Service]
+Type=simple
+User=%s
+WorkingDirectory=%s/scoutManager
+ExecStart=/usr/bin/python %s/scoutManager/scheduler.py
+StandardOutput=syslog
+StandardError=syslog
 
-		[Install]
-		WantedBy=multi-user.target
+[Install]
+WantedBy=multi-user.target
 		''' % (home[6:], home, home))
 
 os.system("sudo cp "+os.path.join(home, "scoutManager/databaseListener.service")+" /etc/systemd/system/databaseListener.service")

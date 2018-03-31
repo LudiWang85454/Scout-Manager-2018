@@ -47,18 +47,18 @@ for device in devices:
 	if len(service_matches) == 0:
 	    print("[W] %s not found, not sent." % device)
 	    notSent.append(device)
+	else:
+		first_match = service_matches[0]
+		port = first_match["port"]
+		name = first_match["name"]
+		host = first_match["host"]
 
-	first_match = service_matches[0]
-	port = first_match["port"]
-	name = first_match["name"]
-	host = first_match["host"]
-
-	print("Connecting to \"%s\" on %s" % (name, host))
-	client = Client(host, port)
-	client.connect()
-	client.put(filename, dataToSend)
-	client.disconnect()
-	print("Successfuly sent to %s." % device)
+		print("Connecting to \"%s\" on %s" % (name, host))
+		client = Client(host, port)
+		client.connect()
+		client.put(filename, dataToSend)
+		client.disconnect()
+		print("Successfuly sent to %s." % device)
 
 for x in range(15):
 	if len(notSent) == 0:
