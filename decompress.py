@@ -31,6 +31,7 @@ compressKeys = {
 	"Q": "activeLift",
 	"P": "soloClimb",
 	"S": "scaleAttemptTele",
+	"$": "scaleAttemptAuto"
 	"R": "numElevatedPyramidIntakeTele",
 	"T": "didGetDisabled",
 	"W": "allianceSwitchAttemptAuto",
@@ -70,7 +71,8 @@ compressValues = {
 	"x": "passive",
 	"X": "both",
 	"u": "owned",
-	"d": "center"
+	"d": "center",
+	"^": "assisted",
 }
 
 boolsList = ['didMakeAutoRun', 'didFailToLift', 'didSucceed', 'didPark', 'didClimb', 'didGetDisabled', 'didGetIncapacitated']
@@ -279,6 +281,14 @@ for k,v in firstDict.items():
 			else:
 				print("Error: needs more continuation")
 
-db.child("TempTeamInMatchDatas/"+str(timdName)).set(firstDict)
+if "-" in timdName and "Q" in timdName:
+	try:
+		int(timdName.split("-")[1])
+		int(timdName.split("Q")[0])
+		int(timdName.split("Q")[1].split("-")[0])
+	except:
+		pass
+	else:
+		db.child("TempTeamInMatchDatas/"+str(timdName)).set(firstDict)
 
 print("Done.")
