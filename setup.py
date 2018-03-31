@@ -74,8 +74,7 @@ StandardOutput=syslog
 StandardError=syslog
 
 [Install]
-WantedBy=multi-user.target
-		''' % (home[6:], home, home))
+WantedBy=multi-user.target''' % (home[6:], home, home))
 
 with open(os.path.join(home, 'scoutManager/scheduler.service'), 'w') as f:
 	f.write('''[Unit]
@@ -91,8 +90,7 @@ StandardOutput=syslog
 StandardError=syslog
 
 [Install]
-WantedBy=multi-user.target
-		''' % (home[6:], home, home))
+WantedBy=multi-user.target''' % (home[6:], home, home))
 
 os.system("sudo cp "+os.path.join(home, "scoutManager/databaseListener.service")+" /etc/systemd/system/databaseListener.service")
 os.system("sudo cp "+os.path.join(home, "scoutManager/scheduler.service")+" /etc/systemd/system/scheduler.service")
