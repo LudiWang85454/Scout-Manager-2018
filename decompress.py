@@ -1,4 +1,20 @@
+#!/usr/bin/python
 import json
+import sys
+import pyrebase
+
+url = 'scouting-2018-9023a'
+
+config = {
+	'apiKey': 'mykey',
+	'authDomain': url + '.firebaseapp.com',
+	'databaseURL': 'https://' + url + '.firebaseio.com/',
+	'storageBucket': url + '.appspot.com'
+}
+
+firebase = pyrebase.initialize_app(config)
+db = firebase.database()
+
 compressKeys = {
 	"C": "partnerLiftType",
 	"B": "didPark",
@@ -60,7 +76,8 @@ compressValues = {
 boolsList = ['didMakeAutoRun', 'didFailToLift', 'didSucceed', 'didPark', 'didClimb', 'didGetDisabled', 'didGetIncapacitated']
 listOfBoolsList = ['alliancePlatformIntakeAuto', 'alliancePlatformIntakeTele', 'opponentPlatformIntakeTele']
 
-data = "1678Q15-12|B:0,E:15,G:[{Q:{a:123.46,C:x,v:1,w:1,f:114.64,K:1,j:0}}],F:0,I:[1,1,1,0,0,0],H:0,M:0,L:0,S:[{a:12.5,f:10.78,K:1,J:1,r:A},{a:20.74,f:18.39,K:1,J:1,r:A},{a:28.45,f:26.82,K:1,J:1,r:u}],R:0,T:0,W:[{a:6.98,f:2.86,K:1,J:1,r:A},{a:14.08,f:11.09,K:1,J:1,r:u}],V:1,Y:0,Z:0,c:0,b:1678,e:Erik,g:6,i:1,h:[{a:100.4,f:96.37,K:1,J:2,r:U}],m:d,l:[{a:42.88,K:0,f:40.37},{a:62.1,f:57.87,K:1,J:1,r:U},{a:76.32,f:71.32,K:1,J:1,r:U},{a:84.18,f:80.56,K:1,J:1,r:U}],o:[0,0,0,0,0,0],n:0,q:1,p:0,t:[0,0,0,0,0,0],y:0,z:0"
+if len(sys.argv) == 2:
+	data = str(sys.argv[1])
 
 timdName = data.split("|")[0]
 timdData = data.split("|")[1]
@@ -222,7 +239,6 @@ for k,v in firstDict.items():
 						if updateDict != {}:
 							firstDict[k][ix][k3] = updateDict
 						for k4, v4 in firstDict[k][ix][k3].items():
-							print(k4, v4)
 							if k4 in compressKeys:
 								k4 = compressKeys[k4]
 							if k4 in boolsList:
@@ -263,9 +279,6 @@ for k,v in firstDict.items():
 			else:
 				print("Error: needs more continuation")
 
-print(firstDict)
-
-with open('./decompressed.json', 'w') as f:
-	json.dump({timdName:firstDict}, f)
+db.child("TempTeamInMatchDatas/"+str(timdName)).set(firstDict)
 
 print("Done.")
