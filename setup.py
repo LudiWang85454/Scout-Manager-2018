@@ -72,6 +72,8 @@ WorkingDirectory=%s/scoutManager
 ExecStart=/usr/bin/python %s/scoutManager/databaseListener.py
 StandardOutput=syslog
 StandardError=syslog
+Restart=always
+RestartSec=3
 
 [Install]
 WantedBy=multi-user.target''' % (home[6:], home, home))
@@ -88,6 +90,8 @@ WorkingDirectory=%s/scoutManager
 ExecStart=/usr/bin/python %s/scoutManager/scheduler.py
 StandardOutput=syslog
 StandardError=syslog
+Restart=always
+RestartSec=3
 
 [Install]
 WantedBy=multi-user.target''' % (home[6:], home, home))
