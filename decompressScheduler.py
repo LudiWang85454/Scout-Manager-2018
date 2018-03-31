@@ -19,6 +19,7 @@ db = firebase.database()
 
 data = db.child("TempQRTeamInMatchDatas").get().val()
 
-for key, value in data.items():
-	subprocess.call("python "+os.path.join(home, "scoutManager/decompress.py")+" "+str(value))
-	db.child("TempQRTeamInMatchDatas/"+str(key)).remove()
+if data != None:
+	for key, value in data.items():
+		subprocess.call("python "+os.path.join(home, "scoutManager/decompress.py")+' "'+str(value)+'"', shell=True)
+		db.child("TempQRTeamInMatchDatas/"+str(key)).remove()
