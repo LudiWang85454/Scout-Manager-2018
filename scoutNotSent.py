@@ -48,7 +48,7 @@ for timd in timds:
 
 #Finally, it iterates through all of the matches in scoutSent and finds missing scouts
 for scout, sent in scoutSent.items():
-	for match in range(1, currentMatch):
+	for match in range(1, currentMatch-1):
 		if match not in sent:
 			scoutNotSent[scout] += [match]
 
@@ -86,8 +86,8 @@ for user in userIDs:
 		channel = user,
 		as_user = True,
 		icon_url = 'https://i.imgur.com/1snON7W.png',
-		attachments = [{'pretext':'Match '+str(currentMatch-1)+' SNS',
-			'fallback': 'Match '+str(currentMatch-1)+' SNS',
+		attachments = [{'pretext':'Match '+str(currentMatch-2)+' SNS',
+			'fallback': 'Match '+str(currentMatch-2)+' SNS',
 			'color':status, 'text':slackScoutNotSent
 		}]
 	)
