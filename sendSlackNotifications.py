@@ -26,7 +26,8 @@ slackProfiles = db.child('activeSlackProfiles').get().val()
 
 notifications = {}
 for user in slackProfiles:
-	notifications[user] = [x for x in slackProfiles[user]['starredMatches'] if x >= currentMatch and (x-currentMatch <= slackProfiles[user]['notifyInAdvance'])]
+	if slackProfiles[user].get('notifyInAdvance', None) != None:
+		notifications[user] = [x for x in slackProfiles[user]['starredMatches'] if x >= currentMatch and (x-currentMatch <= slackProfiles[user]['notifyInAdvance'])]
 
 for user in notifications:
 	text = ""

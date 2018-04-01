@@ -54,6 +54,9 @@ if apikey != "":
 with open(os.path.join(home, 'Downloads/data/lastSentMatch.txt'), 'w') as f:
 	f.write("0")
 
+with open(os.path.join(home, 'Downloads/data/lastSentMatchSlack.txt'), 'w') as f:
+	f.write("0")
+
 with open(os.path.join(home, 'Downloads/data/lastSentAssignment.txt'), 'w') as f:
 	f.write("0")
 
@@ -70,6 +73,24 @@ Type=simple
 User=%s
 WorkingDirectory=%s/scoutManager
 ExecStart=/usr/bin/python %s/scoutManager/databaseListener.py
+StandardOutput=syslog
+StandardError=syslog
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target''' % (home[6:], home, home))
+
+with open(os.path.join(home, 'scoutManager/databaseListenerSlack.service'), 'w') as f:
+	f.write('''[Unit]
+Description=Simplified firebase listener - slack only
+After=syslog.target
+
+[Service]
+Type=simple
+User=%s
+WorkingDirectory=%s/scoutManager
+ExecStart=/usr/bin/python %s/scoutManager/databaseListenerSlack.py
 StandardOutput=syslog
 StandardError=syslog
 Restart=always
@@ -97,10 +118,13 @@ RestartSec=3
 WantedBy=multi-user.target''' % (home[6:], home, home))
 
 os.system("sudo cp "+os.path.join(home, "scoutManager/databaseListener.service")+" /etc/systemd/system/databaseListener.service")
+os.system("sudo cp "+os.path.join(home, "scoutManager/databaseListenerSlack.service")+" /etc/systemd/system/databaseListenerSlack.service")
 os.system("sudo cp "+os.path.join(home, "scoutManager/scheduler.service")+" /etc/systemd/system/scheduler.service")
 os.remove(os.path.join(home, 'scoutManager/databaseListener.service'))
+os.remove(os.path.join(home, 'scoutManager/databaseListenerSlack.service'))
 os.remove(os.path.join(home, 'scoutManager/scheduler.service'))
 os.system("sudo chmod +x /etc/systemd/system/databaseListener.service")
+os.system("sudo chmod +x /etc/systemd/system/databaseListenerSlack.service")
 os.system("sudo chmod +x /etc/systemd/system/scheduler.service")
 os.system("sudo chmod +x "+os.path.join(home, 'scoutManager/scoutNotSent.py'))
 os.system("sudo chmod +x "+os.path.join(home, 'scoutManager/searchFolder.py'))
@@ -110,10 +134,12 @@ os.system("sudo chmod +x "+os.path.join(home, 'scoutManager/decompress.py'))
 os.system("sudo chmod +x "+os.path.join(home, 'scoutManager/decompressScheduler.py'))
 os.system("sudo systemctl daemon-reload")
 os.system("sudo systemctl enable databaseListener.service")
+os.system("sudo systemctl enable databaseListenerSlack.service")
 os.system("sudo systemctl enable scheduler.service")
 os.system("sudo systemctl start databaseListener.service")
+os.system("sudo systemctl start databaseListenerSlack.service")
 os.system("sudo systemctl start scheduler.service")
 
 print("Done.")
 
-print("Please run the following commands:\nsystemctl status databaseListener\nsystemctl status scheduler\n\nIf these both are good, you're done!")
+print("Please run the following commands:\nsystemctl status databaseListener\nsystemctl status databaseListenerSlack\nsystemctl status scheduler\n\nIf all of these are good, you're done!")
