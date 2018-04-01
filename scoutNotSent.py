@@ -77,7 +77,8 @@ slack = SlackClient(apikey)
 
 userIDs = [
 	'U749CSZ36', # Carl
-	'U1R1L8J9H', # Sam
+	'U1R1L8J9H', # Sam Chung
+	'U2UPNHSFK', # Sam Sands
 ]
 
 #Sends a message to every user
@@ -91,3 +92,4 @@ for user in userIDs:
 			'color':status, 'text':slackScoutNotSent
 		}]
 	)
+print("Sent SNS notifications.")
