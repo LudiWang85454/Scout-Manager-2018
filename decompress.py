@@ -31,7 +31,7 @@ compressKeys = {
 	"Q": "activeLift",
 	"P": "soloClimb",
 	"S": "scaleAttemptTele",
-	"$": "scaleAttemptAuto"
+	"$": "scaleAttemptAuto",
 	"R": "numElevatedPyramidIntakeTele",
 	"T": "didGetDisabled",
 	"W": "allianceSwitchAttemptAuto",

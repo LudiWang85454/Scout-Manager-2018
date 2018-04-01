@@ -25,8 +25,10 @@ letters = data['letters']
 print("Pulling data from firebase...")
 availableScouts = [scout for scout, val in db.child('availability').get().val().items() if val == 1]
 cycleNum = db.child('cycleCounter').get().val()
-availableSPRs = {scout:spr for scout, spr in db.child('SPRs').get().val().items() if scout in availableScouts}
+sprs = db.child("SPRs").get().val()
 print("Done pulling data.")
+sprsAll = {scout:sprs[scout] if scout in sprs else 0 for scout in availableScouts}
+availableSPRs = {scout:spr for scout, spr in sprsAll.items() if scout in availableScouts}
 
 sortedSPRs = sorted(availableSPRs.items(), key=lambda x: x[1])
 scouts = [x[0] for x in sortedSPRs]

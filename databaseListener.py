@@ -37,7 +37,7 @@ def stream_match_handler(message):
 		if message["data"] != int(cycle) and home == "/home/citrus": # Prevents double slack notification
 			if message["data"] != 0:
 				subprocess.call("python3 " +os.path.join(home, "scoutManager/scoutNotSent.py"), shell=True)
-			subprocess.call(os.path.join(home, "scoutManager/sendSlackNotifications.py"), shell=True)
+			#subprocess.call(os.path.join(home, "scoutManager/sendSlackNotifications.py"), shell=True)
 			with open(os.path.join(home, 'Downloads/data/lastSentMatch.txt'), 'w') as f:
 				f.write(str(message["data"]))
 
@@ -53,6 +53,6 @@ def stream_cycle_handler(message):
 			with open(os.path.join(home, 'Downloads/data/lastSentCycle.txt'), 'w') as f:
 				f.write(str(message["data"]))
 
-stream1 = db.child("scouts/cycle").stream(stream_assignment_handler)
+#stream1 = db.child("scouts/cycle").stream(stream_assignment_handler)
 stream3 = db.child("currentMatchNum").stream(stream_match_handler)
 stream2 = db.child("cycleCounter").stream(stream_cycle_handler)
