@@ -48,16 +48,6 @@ if type(matchData) == dict:
 
 matchIndex = {match['match_number']:matchData.index(match) for match in matchData if match['comp_level']=='qm'}
 
-# Creates letter assignements
-scouts = "Aakash Aidan Amanda Asha Calvin Carl Carter David Emily Erik Freddy Hanson Jack James Joey Justin Kenny Lasthenia Nathan Sam Stephen Teo Tim Zachary Zatara Zoe".split()
-
-letters = list('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
-fullLetters = {}
-for scout in scouts:
-	choice = random.choice(letters)
-	fullLetters[scout] = choice
-	letters.remove(choice)
-
 fullAssignments = {}
 for match in matchIndex:
 	index = matchIndex[match]
@@ -84,7 +74,7 @@ for match in matchIndex:
 		availableScouts.remove(chosenScout)
 	fullAssignments["match"+str(matchNum)] = assignments
 
-data = {"matches":fullAssignments,"letters":fullLetters}
+data = fullAssignments
 
 with open(os.path.join(home, 'Downloads/data/backupAssignments.json'), 'w') as f:
 	json.dump(data, f)
