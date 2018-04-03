@@ -27,7 +27,7 @@ def getInput():
 
 getInput()
 
-with open(os.path.join(home, 'Downloads/data/backupAssignments.json'), 'r') as f:
+with open(os.path.join(home, 'Downloads/data/QRAssignments.json'), 'r') as f:
 	fullAssignments = json.load(f)
 
 with open(os.path.join(home, 'Downloads/data/activeScouts.json'), 'r') as f:
@@ -36,7 +36,7 @@ with open(os.path.join(home, 'Downloads/data/activeScouts.json'), 'r') as f:
 if resendSomeMode == 1:
 	devices = {k:v for k,v in devices.iteritems() if int(k[5:]) in resendIDs}
 
-filename = 'backupAssignments.txt'
+filename = 'QRAssignments.txt'
 dataToSend = json.dumps(fullAssignments)
 
 notSent = []
