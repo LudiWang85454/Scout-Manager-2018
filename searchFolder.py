@@ -21,7 +21,7 @@ userIDs = userIDs = [
 # This entire try/except statement physically pains me. Blame Sam.
 try:
 	#url = 'servervartest-2018'
-	url = 'scouting-2018-9023a'
+	url = 'scouting-2018-temp'
 
 	config = {
 		'apiKey': 'mykey',

@@ -9,7 +9,7 @@ with open(os.path.join(home, 'Downloads/data/apikey.txt'), 'r') as f:
 	apikey = f.read()
 slack = SlackClient(apikey)
 
-url = 'scouting-2018-9023a'
+url = 'scouting-2018-temp'
 
 config = {
 	'apiKey': 'mykey',

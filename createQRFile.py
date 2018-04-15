@@ -8,7 +8,7 @@ import random
 
 home = os.path.expanduser('~')
 
-url = 'scouting-2018-9023a'
+url = 'scouting-2018-temp'
 
 config = {
 	'apiKey': 'mykey',

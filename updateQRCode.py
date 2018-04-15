@@ -5,7 +5,7 @@ import os
 
 home = os.path.expanduser('~')
 
-url = 'scouting-2018-9023a'
+url = 'scouting-2018-temp'
 
 config = {
 	'apiKey': 'mykey',
@@ -17,7 +17,7 @@ config = {
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
-with open(os.path.join(home, 'Downloads/data/backupAssignments.json'), 'r') as f:
+with open(os.path.join(home, 'Downloads/data/QRAssignments.json'), 'r') as f:
 	data = json.load(f)
 
 letters = data['letters']

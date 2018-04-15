@@ -3,7 +3,7 @@ import json
 import sys
 import pyrebase
 
-url = 'scouting-2018-9023a'
+url = 'scouting-2018-temp'
 
 config = {
 	'apiKey': 'mykey',
@@ -60,6 +60,10 @@ compressKeys = {
 	"v": "didClimb",
 	"y": "didGetIncapacitated",
 	"z": "totalNumScaleFoul",
+	"?": "time",
+	"+": "vault",
+	"<": "cubes"
+	">": "cycleNumber",
 }
 
 compressValues = {
