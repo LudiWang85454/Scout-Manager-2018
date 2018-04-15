@@ -62,7 +62,7 @@ compressKeys = {
 	"z": "totalNumScaleFoul",
 	"?": "time",
 	"+": "vault",
-	"<": "cubes"
+	"<": "cubes",
 	">": "cycleNumber",
 }
 
