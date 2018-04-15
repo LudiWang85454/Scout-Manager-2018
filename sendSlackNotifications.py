@@ -30,14 +30,16 @@ for user in slackProfiles:
 		notifications[user] = [x for x in slackProfiles[user]['starredMatches'] if x >= currentMatch and (x-currentMatch <= slackProfiles[user]['notifyInAdvance'])]
 
 for user in notifications:
+	print("Sending to '%s'" % user)
 	text = ""
+	notifications[user].sort()
 	for match in notifications[user]:
 		if match-currentMatch == 0:
 			text += 'Match '+str(match)+' is next.\n'
 		elif match-currentMatch == 1:
 			text += 'Match '+str(match)+' is 1 match away.\n'
 		else:
-			text += 'Match '+str(match)+' is '+str(match-currentMatch)+' match(es) away.\n'
+			text += 'Match '+str(match)+' is '+str(match-currentMatch)+' matches away.\n'
 	if text != "":
 		text = text[:-1]
 		print(slack.api_call('chat.postMessage',

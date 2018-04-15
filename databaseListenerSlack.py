@@ -19,13 +19,14 @@ db = firebase.database()
 
 def stream_match_handler(message):
 	if type(message["data"]) == int:
-		with open(os.path.join(home, 'Downloads/data/lastSentMatch.txt'), 'r') as f:
+		with open(os.path.join(home, 'Downloads/data/lastSentMatchSlack.txt'), 'r') as f:
 			cycle = f.read()
 		if cycle == "":
 			cycle = 0
 		if message["data"] != int(cycle) and home == "/home/citrus": # Prevents double slack notification
-			isubprocess.call(os.path.join(home, "scoutManager/sendSlackNotifications.py"), shell=True)
-			with open(os.path.join(home, 'Downloads/data/lastSentMatch.txt'), 'w') as f:
+			subprocess.call(os.path.join(home, "scoutManager/sendSlackNotifications.py"), shell=True)
+			print("Ran script.")
+			with open(os.path.join(home, 'Downloads/data/lastSentMatchSlack.txt'), 'w') as f:
 				f.write(str(message["data"]))
 
 stream3 = db.child("currentMatchNum").stream(stream_match_handler)
