@@ -97,10 +97,5 @@ with open(os.path.join(home, 'Downloads/data/QRAssignments.txt'), 'w') as f:
 with open(os.path.join(home, 'Downloads/data/activeScouts.json'), 'r') as f:
 	devices = json.load(f)
 
-while True:
-	x = raw_input("Would you like to send (y/n): ")
-	if x in ["y", "Y"]:
-		os.system("python " +os.path.join(home, 'scoutManager/sendQRFile.py'))
-		break
-	elif x in ["n", "N"]:
-		break
+print("")
+print("Please run sendQRFile.py to send the file!")
