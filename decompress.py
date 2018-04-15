@@ -64,6 +64,7 @@ compressKeys = {
 	"+": "vault",
 	"<": "cubes",
 	">": "cycleNumber",
+	"!": "mode",
 }
 
 compressValues = {
@@ -77,6 +78,9 @@ compressValues = {
 	"u": "owned",
 	"d": "center",
 	"^": "assisted",
+	"*": "QR",
+	"(": "backup",
+	")": "override",
 }
 
 boolsList = ['didMakeAutoRun', 'didFailToLift', 'didSucceed', 'didPark', 'didClimb', 'didGetDisabled', 'didGetIncapacitated']
