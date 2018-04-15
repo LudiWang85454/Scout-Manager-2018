@@ -81,13 +81,14 @@ for x in range(15):
 	if len(notsent) == 0:
 		break
 	else:
+		updatedList = []
 		for device in notsent:
 			print("Sending to %s..." % device)
 			service_matches = bluetooth.find_service(name=b'OBEX Object Push', address = devices[device] )
 			print(service_matches)
 			if len(service_matches) == 0:
 				print("[W] %s not found, not sent." % device)
-				notsent.append(device)
+				updatedList.append(device)
 			else:
 				first_match = service_matches[0]
 				port = first_match["port"]
@@ -100,3 +101,4 @@ for x in range(15):
 				client.put(filename, json.dumps(assignments['matches']))
 				client.disconnect()
 				print("Closed connection to %s." % device)
+		notSent = updatedList
