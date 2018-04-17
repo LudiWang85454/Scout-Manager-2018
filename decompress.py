@@ -63,7 +63,7 @@ compressKeys = {
 	"?": "time",
 	"+": "vault",
 	"<": "cubes",
-	">": "cycleNumber",
+	">": "cycle",
 	"!": "mode",
 }
 
