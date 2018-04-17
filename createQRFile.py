@@ -49,8 +49,7 @@ if type(matchData) == dict:
 matchIndex = {match['match_number']:matchData.index(match) for match in matchData if match['comp_level']=='qm'}
 
 # Creates letter assignements
-scouts = "Aakash Aidan Amanda Asha Calvin Carl Carter David Emily Erik Freddy Hanson Jack James Joey Justin Kenny Lasthenia Nathan Sam Stephen Teo Tim Zachary Zatara Zoe".split()
-
+scouts = "Aakash Aidan Amanda Anoushka Asha Calvin Carl Carter David Emily Erik Ethan Freddy Hanson Jack Janet Jon Justin Kenny Lasthenia Lyra Rolland Sam Stephen Teo Tim Zachary Zatara Zoe Backup1 Backup2 Backup3 Backup4 Backup5"
 letters = list('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
 fullLetters = {}
 for scout in scouts:
