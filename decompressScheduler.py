@@ -5,7 +5,7 @@ import os
 
 home = os.path.expanduser('~')
 
-url = 'scouting-2018-temp'
+url = 'scouting-2018-houston'
 
 config = {
 	'apiKey': 'mykey',

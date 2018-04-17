@@ -8,7 +8,7 @@ from slackclient import SlackClient
 home = os.path.expanduser('~')
 
 #Sets up the firebase
-url = 'scouting-2018-temp'
+url = 'scouting-2018-houston'
 
 config = {
 	'apiKey': 'mykey',

@@ -3,7 +3,7 @@ import json
 import sys
 import pyrebase
 
-url = 'scouting-2018-temp'
+url = 'scouting-2018-houston'
 
 config = {
 	'apiKey': 'mykey',
