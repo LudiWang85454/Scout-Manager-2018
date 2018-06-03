@@ -1,4 +1,6 @@
 #!/usr/bin/python -p
+# Separated from databaseListener.py to keep crashes from an unreliable
+# notification system to crash the critical processes
 import os
 import pyrebase
 import subprocess
