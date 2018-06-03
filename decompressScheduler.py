@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# Iterates through each decompression, calls a subprocess for each
 import pyrebase
 import subprocess
 import os
