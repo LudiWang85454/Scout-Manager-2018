@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# Uploads data sent through bluetooth
 import os
 import json
 import pyrebase
