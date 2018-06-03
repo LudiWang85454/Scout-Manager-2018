@@ -1,4 +1,5 @@
 #!/usr/bin/python -p
+# Listens to firebase for certain updates, triggers other scripts
 import os
 import pyrebase
 import subprocess
