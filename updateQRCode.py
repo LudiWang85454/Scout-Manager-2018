@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# Updates QR code for new scout availability
 import pyrebase
 import json
 import os
