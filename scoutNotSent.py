@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# Sends missing data and diagnostic information via slack to lead scouts
 import os
 import json
 import pyrebase
@@ -97,9 +98,6 @@ elif list(diagnostics['cycle'].values()).count(modeCycle) != len(diagnostics['cy
 	for k, v in diagnostics['cycle'].items():
 		if v != modeCycle:
 			diagnosticsMessage += ('Scout ' + str(k) + " (" + getNameFromID(k)+'): ') + str(v) + "\n"
-
-
-#diagnosticsMessage = ''
 
 status = '#f1ad1d'
 if slackScoutNotSent == '' and diagnosticsMessage == '':
