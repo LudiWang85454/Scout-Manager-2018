@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# Decompresses QR code data
 import json
 import sys
 import pyrebase
