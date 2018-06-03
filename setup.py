@@ -1,3 +1,4 @@
+# Sets up file permissions, devices to send to, directories, files, etc.
 import json
 import os
 
