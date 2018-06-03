@@ -1,3 +1,5 @@
+# Creates the backup assignment file
+
 import bluetooth
 from PyOBEX.client import Client
 import pyrebase
