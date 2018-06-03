@@ -1,3 +1,5 @@
+# Creates the QR assignment file based on SPR ranking
+
 import bluetooth
 from PyOBEX.client import Client
 import pyrebase
